@@ -2,4 +2,5 @@ npm install antd @ant-design/icons react-redux @reduxjs/toolkit lucide-react rea
 
 ----->
 ApI:
-rapid API -> coin Ranking --> nodejs --> options object [copy]
+rapid API -> coin Ranking --> nodejs --> options object [copy] -> cryptoAPI.js
+NewsAPI
