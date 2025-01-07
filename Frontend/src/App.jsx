@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Route, Routes } from "react-router-dom"; // Use Routes instead of Switch
+import { Routes, Route, Link } from "react-router-dom";
 import { Layout, Typography, Space } from "antd";
 import {
   Navbar,
@@ -10,7 +10,7 @@ import {
   News,
 } from "./components/Index";
 import "./index.css";
-import './cpy.css'
+import "./cpy.css";
 
 const App = () => {
   return (
@@ -21,31 +21,32 @@ const App = () => {
       <div className="main">
         <Layout>
           <div className="routes">
-            <Routes> {/* Replaced Switch with Routes */}
-              <Route path="/" element={<Homepage />} /> {/* Updated Route syntax */}
+            <Routes>
+              <Route path="/" element={<Homepage />} />
               <Route path="/exchanges" element={<Exchanges />} />
-              <Route path="/CryptoCurrencies" element={<CryptoCurrencies />} />
+              <Route path="/cryptocurrencies" element={<CryptoCurrencies />} />
               <Route path="/crypto/:coinId" element={<CryptoDetails />} />
               <Route path="/news" element={<News />} />
             </Routes>
           </div>
         </Layout>
         <div className="bg-[#001529] flex flex-col items-center p-5 text-white">
-        <Typography.Title level={5} className="text-center">
-         <p className="text-white">Cryptoverse <br />
-         All Rights Reserved</p> 
-        </Typography.Title>
-        <Space>
-          <Link to="#">Link1</Link>
-          <Link to="#">Link2</Link>
-          <Link to="#">Link3</Link>
-        </Space>
+          <Typography.Title level={5} className="text-center">
+            <p className="text-white">
+              Cryptoverse <br />
+              All Rights Reserved
+            </p>
+          </Typography.Title>
+          <Space>
+            <Link to="/">Home</Link>
+            <Link to="/exchanges">Exchanges</Link>
+            <Link to="/news">News</Link>
+          </Space>
+        </div>
       </div>
-      </div>
-      
     </div>
-    
   );
 };
 
 export default App;
+
