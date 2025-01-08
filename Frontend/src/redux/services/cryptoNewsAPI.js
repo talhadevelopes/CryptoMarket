@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 const baseUrl = 'https://newsapi.org/v2';
-const apiKey = '5f2f0ea4670a41858e320de2d2a70f1d';
+const apiKey = import.meta.env.VITE_NEWS_API_KEY; // Access the API key from the .env file
 
 const createRequest = (url) => ({ url });
 

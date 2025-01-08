@@ -1,32 +1,55 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-const cryptoApiHeaders = {
-  'x-rapidapi-key': 'bb6cf27f3emshb1021952122e1b8p14da07jsn87816180b44e',
+// CoinRanking API Setup
+const coinRankingHeaders = {
+  'x-rapidapi-key': import.meta.env.VITE_COINRANKING_API_KEY,
   'x-rapidapi-host': 'coinranking1.p.rapidapi.com',
 };
 
-const baseUrl = 'https://coinranking1.p.rapidapi.com';
+const coinRankingBaseUrl = 'https://coinranking1.p.rapidapi.com';
 
-const createRequest = (url) => ({ url, headers: cryptoApiHeaders });
+// CryptoCompare API Setup
+const cryptoCompareHeaders = {
+  'Authorization': `Apikey ${import.meta.env.VITE_CRYPTOCOMPARE_API_KEY}`,
+};
+
+const cryptoCompareBaseUrl = 'https://min-api.cryptocompare.com';
 
 export const cryptoApi = createApi({
   reducerPath: 'cryptoApi',
-  baseQuery: fetchBaseQuery({ baseUrl }),
+  baseQuery: fetchBaseQuery({}),
   endpoints: (builder) => ({
     getCryptos: builder.query({
-      query: (count) => createRequest(`/coins?limit=${count}`),
+      query: (count) => ({
+        url: `${coinRankingBaseUrl}/coins?limit=${count}`,
+        headers: coinRankingHeaders,
+      }),
     }),
     getCryptoDetails: builder.query({
-      query: (coinId) => createRequest(`/coin/${coinId}`),
+      query: (coinId) => ({
+        url: `${coinRankingBaseUrl}/coin/${coinId}`,
+        headers: coinRankingHeaders,
+      }),
     }),
     getCryptoHistory: builder.query({
-      query: ({ coinId, timeperiod }) => createRequest(`/coin/${coinId}/history?timePeriod=${timeperiod}`),
+      query: ({ coinId, timeperiod }) => ({
+        url: `${coinRankingBaseUrl}/coin/${coinId}/history?timePeriod=${timeperiod}`,
+        headers: coinRankingHeaders,
+      }),
     }),
     getExchanges: builder.query({
-      query: () => createRequest('/exchanges'),
+      query: () => ({
+        url: `${cryptoCompareBaseUrl}/data/exchanges/general`,
+        headers: cryptoCompareHeaders,
+      }),
     }),
   }),
 });
 
-export const { useGetCryptosQuery, useGetCryptoDetailsQuery, useGetCryptoHistoryQuery, useGetExchangesQuery } = cryptoApi;
+export const { 
+  useGetCryptosQuery, 
+  useGetCryptoDetailsQuery, 
+  useGetCryptoHistoryQuery, 
+  useGetExchangesQuery 
+} = cryptoApi;
 
