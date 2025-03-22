@@ -5,6 +5,15 @@ import { Typography, Row, Col, Statistic } from "antd";
 import { useGetCryptosQuery } from "../redux/services/cryptoAPI";
 import CryptoCurrencies from "./CryptoCurrencies";
 import News from "./News";
+import {
+  MoneyCollectOutlined, // Icon for Market Cap
+  DollarCircleOutlined, // Icon for 24h Volume
+  FundOutlined, // Icon for Crypto Currencies
+  BankOutlined, // Icon for Exchanges
+  ShoppingOutlined,
+  GoldFilled, // Icon for Markets
+} from "@ant-design/icons";
+
 
 const { Title } = Typography;
 
@@ -20,23 +29,69 @@ const Homepage = () => {
   return (
     <>
       <Title level={2} className="heading">Global Crypto Stats</Title>
-      <Row>
-        <Col span={12}>
-          <Statistic title="Total Crypto Currencies" value={globalStats?.total || "N/A"} />
-        </Col>
-        <Col span={12}>
-          <Statistic title="Total Exchanges" value={millify(globalStats?.totalExchanges || 0)} />
-        </Col>
-        <Col span={12}>
-          <Statistic title="Total Market Cap" value={millify(globalStats?.totalMarketCap || 0)} />
-        </Col>
-        <Col span={12}>
-          <Statistic title="Total 24h Volume" value={millify(globalStats?.total24hVolume || 0)} />
-        </Col>
-        <Col span={12}>
-          <Statistic title="Total Markets" value={millify(globalStats?.totalMarkets || 0)} />
-        </Col>
-      </Row>
+      <Row gutter={[16, 16]}>
+      <Col span={12}>
+        <Statistic
+        className="bg-white w-[70%] p-4 rounded-lg shadow-md"
+          title={
+            <span>
+              <FundOutlined style={{ marginRight: 8, color: "#1890ff", fontSize: "large"  }} />
+              Total Crypto Currencies
+            </span>
+          }
+          value={globalStats?.total || "N/A"}
+        />
+      </Col>
+      <Col span={12}>
+        <Statistic
+        className="bg-white w-[70%] p-4 rounded-lg shadow-md"
+          title={
+            <span>
+              <BankOutlined style={{ marginRight: 8, color: "#52c41a", fontSize: "large"  }} />
+              Total Exchanges
+            </span>
+          }
+          value={millify(globalStats?.totalExchanges || 0)}
+        />
+      </Col>
+      <Col span={12}>
+        <Statistic
+        className="bg-white w-[70%] p-4 rounded-lg shadow-md"
+          title={
+            <span>
+              <MoneyCollectOutlined style={{ marginRight: 8, color: "#faad14", fontSize: "large"  }} />
+              Total Market Cap
+            </span>
+          }
+          value={millify(globalStats?.totalMarketCap || 0)}
+        />
+      </Col>
+      <Col span={12}>
+        <Statistic
+        className="bg-white w-[70%] p-4 rounded-lg shadow-md"
+          title={
+            <span>
+              <DollarCircleOutlined style={{ marginRight: 8, fontSize: "large" ,color: "#13c2c2" }} />
+              Total 24h Volume
+            </span>
+          }
+          value={millify(globalStats?.total24hVolume || 0)}
+        />
+      </Col>
+      <Col span={12}>
+        <Statistic
+        className="bg-white w-[70%] p-4 rounded-lg shadow-md"
+          title={
+            <span>
+              <ShoppingOutlined style={{ marginRight: 8, color: "#722ed1", fontSize: "large" }} />
+              Total Markets
+            </span>
+          }
+          value={millify(globalStats?.totalMarkets || 0)}
+        />
+      </Col>
+    </Row>
+  
       <div className="home-heading-container">
         <Title level={2} className="home-title">Top 10 Cryptocurrencies in the World</Title>
         <Title level={3} className="show-more"><Link to='/CryptoCurrencies'>Show More</Link></Title>

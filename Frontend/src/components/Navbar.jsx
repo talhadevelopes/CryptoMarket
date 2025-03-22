@@ -32,7 +32,14 @@ const Navbar = ({ activeMenu, setActiveMenu, screenSize }) => {
   ];
 
   // Sidebar width logic
-  const sidebarWidth = screenSize < 768 ? (activeMenu ? "w-full" : "w-0") : "w-[12%]";
+  const sidebarWidth =
+    screenSize < 768
+      ? activeMenu
+        ? "w-64" // Sidebar width for mobile when open
+        : "w-0" // Sidebar width for mobile when closed
+      : activeMenu
+      ? "w-64" // Sidebar width for desktop when open
+      : "w-20"; // Sidebar width for desktop when closed (adjust as needed)
 
   return (
     <>
@@ -45,7 +52,7 @@ const Navbar = ({ activeMenu, setActiveMenu, screenSize }) => {
 
       {/* Sidebar */}
       <div
-        className={`fixed z-40 top-0 left-0 flex h-screen bg-[#001529] ${sidebarWidth} transition-all duration-300 overflow-hidden`}
+        className={`fixed z-40 top-0 left-0 flex h-screen bg-[#fff] ${sidebarWidth} transition-all duration-300 overflow-hidden`}
       >
         <div className="flex flex-col w-full p-5">
           {/* Sidebar Content */}
@@ -55,12 +62,22 @@ const Navbar = ({ activeMenu, setActiveMenu, screenSize }) => {
               size="large"
             />
             {activeMenu && (
-              <Typography.Title level={2} className="ml-3 text-white text-xs">
+              <Typography.Title level={4} className="ml-3 text-white text-xs">
                 <Link to="/">CryptoMarket</Link>
               </Typography.Title>
             )}
           </div>
-          <Menu theme="dark" className="mt-8 text-xl" items={menuItems} />
+          <Menu theme="light" className="mt-8 text-lg" items={menuItems} />
+
+          <div>
+            {activeMenu && (
+              <div className="absolute bottom-0 p-5">
+                <h3 className="bg-black text-white px-6 py-4 rounded ">
+                  <a href="https://github.com/talhadevelopes/CryptoMarket"> Source Code </a>
+                </h3>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </>

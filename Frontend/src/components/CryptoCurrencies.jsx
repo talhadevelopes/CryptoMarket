@@ -24,13 +24,19 @@ const CryptoCurrencies = ({ simplified }) => {
   return (
     <>
       {!simplified && (
-        <div className="search-crypto">
-          <input
-            type="text"
-            placeholder="Search Cryptocurrency"
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-        </div>
+        <div className="search-crypto" style={{ display: "flex", alignItems: "center" }}>
+  <input
+    className="px-20 py-2 border border-gray-300 rounded-tl-lg rounded-bl-lg text-xl flex-1"
+    type="text"
+    placeholder="Search Cryptocurrency"
+    onChange={(e) => setSearchTerm(e.target.value)}
+  />
+  <button
+    className="ml-0 px-6 py-4 rounded-r rounded-b mr-4 bg-blue-500 text-white  hover:bg-blue-600"
+  >
+    Click
+  </button>
+</div>
       )}
 
       <Row gutter={[32, 32]} className="crypto-card-container">

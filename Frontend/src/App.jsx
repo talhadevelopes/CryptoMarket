@@ -45,9 +45,11 @@ const App = () => {
 
       {/* Main Body */}
       <div
-        className={`flex-[0.99] mt-[20px] relative transition-all duration-300 ${
-          activeMenu && screenSize >= 768 ? "ml-[200px]" : "ml-5 mr-3" 
-        } ${screenSize < 768 ? "ml-0" : ""}`}
+        style={{
+          marginLeft: activeMenu && screenSize >= 768 ? "260px" : "70px", // Directly apply margin
+          transition: "margin-left 0.3s", // Smooth transition
+        }}
+        className="flex-[0.99] mt-[20px] relative"
       >
         <Layout>
           <div className="routes">

@@ -4,7 +4,10 @@ module.exports = {
   theme: {
     extend: {
       spacing: {
-        '200': '200px', // Add custom spacing if needed
+        '200': '200px',
+        "30": "30px",
+        "50": "50px",
+        // Add custom spacing if needed
       },
     },
   },
