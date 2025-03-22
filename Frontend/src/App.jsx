@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import { Layout, Typography, Space } from "antd";
 import {
@@ -13,12 +13,42 @@ import "./index.css";
 import "./cpy.css";
 
 const App = () => {
+  const [activeMenu, setActiveMenu] = useState(true); // For large screens
+  const [screenSize, setScreenSize] = useState(window.innerWidth);
+
+  // Handle screen resize
+  useEffect(() => {
+    const handleResize = () => setScreenSize(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    handleResize();
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Automatically hide sidebar on small screens
+  useEffect(() => {
+    if (screenSize < 768) {
+      setActiveMenu(false); // Hide sidebar on small screens
+    } else {
+      setActiveMenu(true); // Show sidebar on large screens
+    }
+  }, [screenSize]);
+
   return (
     <div className="app">
-      <div className="navbar">
-        <Navbar />
-      </div>
-      <div className="main">
+      {/* Navbar */}
+      <Navbar
+        activeMenu={activeMenu}
+        setActiveMenu={setActiveMenu}
+        screenSize={screenSize}
+      />
+
+      {/* Main Body */}
+      <div
+        className={`flex-[0.99] mt-[20px] relative transition-all duration-300 ${
+          activeMenu && screenSize >= 768 ? "ml-[200px]" : "ml-5 mr-3" 
+        } ${screenSize < 768 ? "ml-0" : ""}`}
+      >
         <Layout>
           <div className="routes">
             <Routes>
@@ -49,4 +79,3 @@ const App = () => {
 };
 
 export default App;
-

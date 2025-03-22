@@ -1,12 +1,11 @@
-/** @type {import('tailwindcss').Config} */
-export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+module.exports = {
+  mode: 'jit', // Enable JIT compiler
+  purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
   theme: {
-    extend: {},
+    extend: {
+      spacing: {
+        '200': '200px', // Add custom spacing if needed
+      },
+    },
   },
-  plugins: [],
-}
-
+};
