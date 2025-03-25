@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import { Layout, Typography, Space } from "antd";
+import EnvironmentDebug from "./components/EnvironmentDebug";
 import {
   Navbar,
   Exchanges,
@@ -44,6 +45,7 @@ const App = () => {
       />
 
       {/* Main Body */}
+      <EnvironmentDebug />
       <div
         style={{
           marginLeft: activeMenu && screenSize >= 768 ? "260px" : "70px", // Directly apply margin
