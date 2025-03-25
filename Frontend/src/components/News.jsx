@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Card, Typography, Row, Col, Button, Input } from "antd";
-import { useGetCryptosNewsQuery } from "../redux/services/cryptoNewsApi"; // Note: Changed file name to match Redux convention
+import { useGetCryptosNewsQuery } from "../redux/services/cryptoNewsAPI";
 import moment from "moment";
 
 const { Title, Text } = Typography;
