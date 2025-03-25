@@ -48,7 +48,7 @@ const App = () => {
       <EnvironmentDebug />
       <div
         style={{
-          marginLeft: activeMenu && screenSize >= 768 ? "260px" : "70px", // Directly apply margin
+          marginLeft: activeMenu && screenSize >= 768 ? "260px" : "20px", // Directly apply margin
           transition: "margin-left 0.3s", // Smooth transition
         }}
         className="flex-[0.99] mt-[20px] relative"

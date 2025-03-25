@@ -1,16 +1,12 @@
 import React, { useState } from "react";
-import { Card, Typography, Row, Col, Button, Input } from "antd";
 import { useGetCryptosNewsQuery } from "../redux/services/cryptoNewsAPI";
 import moment from "moment";
-
-const { Title, Text } = Typography;
-const { Search } = Input;
 
 const News = ({ simplified }) => {
   const [searchKeyword, setSearchKeyword] = useState("");
 
   const { data: cryptoNews, error, isFetching } = useGetCryptosNewsQuery({
-    newsCategory: "cryptocurrency", // Changed to lowercase to match GNews query
+    newsCategory: "cryptocurrency",
     count: simplified ? 6 : 30,
   });
 
@@ -35,150 +31,63 @@ const News = ({ simplified }) => {
   );
 
   return (
-    <div>
+    <div className="p-4">
       {/* Search Bar */}
-      <Row justify="center" style={{ marginBottom: "20px" }}>
-        <Col span={24}>
-          <Search
-            placeholder="Search News..."
-            enterButton="Search"
-            size="large"
-            onSearch={(value) => setSearchKeyword(value)}
-            style={{ width: "100%", maxWidth: "600px" }}
-          />
-        </Col>
-      </Row>
+      <div className="flex justify-center mb-6">
+        <input
+          type="text"
+          placeholder="Search News..."
+          className="w-full max-w-lg p-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          value={searchKeyword}
+          onChange={(e) => setSearchKeyword(e.target.value)}
+        />
+      </div>
 
       {/* Display Filtered News */}
-      <Row gutter={[24, 24]}>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredNews.length > 0 ? (
           filteredNews.map((news, i) => (
-            <Col xs={24} lg={8} key={i}>
-              <Card
-                hoverable
-                style={{
-                  height: "100%",
-                  borderRadius: "8px",
-                  boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
-                }}
-              >
-                <a
-                  href={news.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  style={{ width: "100%" }}
-                >
-                  {/* First Row: Title, Description, and Image */}
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "row",
-                      justifyContent: "space-between",
-                      alignItems: "flex-start",
-                    }}
-                  >
-                    {/* Left Side: Title and Description */}
-                    <div
-                      style={{
-                        flex: 1,
-                        paddingRight: "10px",
-                      }}
-                    >
-                      <Title
-                        level={4}
-                        style={{
-                          fontSize: "16px",
-                          fontWeight: "bold",
-                          textAlign: "left",
-                        }}
-                      >
-                        {news.title}
-                      </Title>
-                      <Text
-                        style={{
-                          fontSize: "14px",
-                          color: "#555",
-                          textAlign: "left",
-                        }}
-                      >
-                        {news.description
-                          ? news.description
-                          : "No description available."}
-                      </Text>
-                    </div>
+            <div
+              key={i}
+              className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300"
+            >
+              <a href={news.url} target="_blank" rel="noreferrer">
+                {/* Title */}
+                <h3 className="text-lg font-bold text-gray-800 mb-2">
+                  {news.title}
+                </h3>
 
-                    {/* Right Side: Image */}
-                    <div
-                      style={{
-                        width: "200px",
-                        height: "200px",
-                      }}
-                    >
-                      <img
-                        src={news.image || demoImage} // Changed from urlToImage to image
-                        alt={news.title}
-                        style={{
-                          width: "100%",
-                          height: "100%",
-                          objectFit: "cover",
-                          borderRadius: "8px",
-                        }}
-                      />
-                    </div>
-                  </div>
+                {/* Image */}
+                <img
+                  src={news.image || demoImage}
+                  alt={news.title}
+                  className="w-full h-48 object-cover rounded-md mb-2"
+                />
 
-                  {/* Second Row: Full Width Description and Button */}
-                  <div
-                    style={{
-                      marginTop: "20px",
-                      width: "100%",
-                    }}
-                  >
-                    <Text
-                      style={{
-                        fontSize: "14px",
-                        color: "#555",
-                        textAlign: "left",
-                      }}
-                    >
-                      {news.content
-                        ? news.content.substring(0, 150) + "..."
-                        : "No content available."}
-                    </Text>
+                {/* Description */}
+                <p className="text-sm text-gray-600 mb-4">
+                  {news.description || "No description available."}
+                </p>
 
-                    <div style={{ display: "flex", justifyContent: "space-between", marginTop: "10px" }}>
-                      <Text type="secondary" style={{ fontSize: "12px" }}>
-                        {news.source?.name || "Unknown source"}
-                      </Text>
-                      <Text type="secondary" style={{ fontSize: "12px" }}>
-                        {moment(news.publishedAt).fromNow()}
-                      </Text>
-                    </div>
+                {/* Source and Time */}
+                <div className="flex justify-between text-xs text-gray-500 mb-4">
+                  <span>{news.source?.name || "Unknown source"}</span>
+                  <span>{moment(news.publishedAt).fromNow()}</span>
+                </div>
 
-                    <Button
-                      type="primary"
-                      style={{
-                        marginTop: "20px",
-                        backgroundColor: "#1890ff",
-                        borderColor: "#1890ff",
-                        padding: "8px 20px",
-                        fontSize: "14px",
-                        width: "100%",
-                      }}
-                    >
-                      Read More
-                    </Button>
-                  </div>
-                </a>
-              </Card>
-            </Col>
+                {/* Read More Button */}
+                <button className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition">
+                  Read More
+                </button>
+              </a>
+            </div>
           ))
         ) : (
-          <Col span={24}>
-            <div>No news articles found for the search term.</div>
-          </Col>
+          <div className="col-span-full text-center text-gray-500">
+            No news articles found for the search term.
+          </div>
         )}
-      </Row>
+      </div>
     </div>
   );
 };
