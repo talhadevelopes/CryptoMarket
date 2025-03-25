@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { Card, Typography, Row, Col, Button, Avatar, Input } from "antd";
-import { useGetCryptosNewsQuery } from "../redux/services/cryptoNewsAPI";
+import React, { useState } from "react";
+import { Card, Typography, Row, Col, Button, Input } from "antd";
+import { useGetCryptosNewsQuery } from "../redux/services/cryptoNewsApi"; // Note: Changed file name to match Redux convention
 import moment from "moment";
-import { UserOutlined } from "@ant-design/icons";
 
 const { Title, Text } = Typography;
 const { Search } = Input;
@@ -11,7 +10,7 @@ const News = ({ simplified }) => {
   const [searchKeyword, setSearchKeyword] = useState("");
 
   const { data: cryptoNews, error, isFetching } = useGetCryptosNewsQuery({
-    newsCategory: "CryptoCurrency",
+    newsCategory: "cryptocurrency", // Changed to lowercase to match GNews query
     count: simplified ? 6 : 30,
   });
 
@@ -116,7 +115,7 @@ const News = ({ simplified }) => {
                       }}
                     >
                       <img
-                        src={news.urlToImage || demoImage}
+                        src={news.image || demoImage} // Changed from urlToImage to image
                         alt={news.title}
                         style={{
                           width: "100%",
@@ -132,7 +131,7 @@ const News = ({ simplified }) => {
                   <div
                     style={{
                       marginTop: "20px",
-                      width: "100%", // Full width of the card
+                      width: "100%",
                     }}
                   >
                     <Text
@@ -142,10 +141,19 @@ const News = ({ simplified }) => {
                         textAlign: "left",
                       }}
                     >
-                      {news.description
-                        ? news.description
-                        : "No description available."}
+                      {news.content
+                        ? news.content.substring(0, 150) + "..."
+                        : "No content available."}
                     </Text>
+
+                    <div style={{ display: "flex", justifyContent: "space-between", marginTop: "10px" }}>
+                      <Text type="secondary" style={{ fontSize: "12px" }}>
+                        {news.source?.name || "Unknown source"}
+                      </Text>
+                      <Text type="secondary" style={{ fontSize: "12px" }}>
+                        {moment(news.publishedAt).fromNow()}
+                      </Text>
+                    </div>
 
                     <Button
                       type="primary"
@@ -155,9 +163,8 @@ const News = ({ simplified }) => {
                         borderColor: "#1890ff",
                         padding: "8px 20px",
                         fontSize: "14px",
-                        width: "100%", // Full width button
+                        width: "100%",
                       }}
-                      onClick={() => window.open(news.url, "_blank")}
                     >
                       Read More
                     </Button>
